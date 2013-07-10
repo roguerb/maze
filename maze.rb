@@ -1,46 +1,10 @@
-class Point
-  attr_accessor :x, :y, :tile
-
-  def initialize(tile, x, y)
-    @x = x
-    @y = y
-    @tile = tile
-  end
-end
-
-class Player
-  attr_accessor :x, :y
-
-  def initialize(point)
-    x = point.x
-    y = point.y
-  end
-
-  def up
-    x += 1
-  end
-
-end
+require_relative 'point'
 
 class Maze
   attr_accessor :maze
 
-  MAZE1 = %{#####################################
-# #   #     #A        #     #       #
-# # # # # # ####### # ### # ####### #
-# # #   # #         #     # #       #
-# ##### # ################# # #######
-#     # #       #   #     # #   #   #
-##### ##### ### ### # ### # # # # # #
-#   #     #   # #   #  B# # # #   # #
-# # ##### ##### # # ### # # ####### #
-# #     # #   # # #   # # # #       #
-# ### ### # # # # ##### # # # ##### #
-#   #       #   #       #     #     #
-#####################################}
-  
-  def initialize
-    @maze = parse_maze(MAZE1)
+  def initialize(maze_string)
+    @maze = parse_maze(maze_string)
     @player = Player.new(start_point)
   end
 
@@ -49,11 +13,11 @@ class Maze
   end
 
   def start_point
-    @maze.select { |v| v.type == "A".to_sym }.first
+    @maze.select { |v| v.tile == "A" }.first
   end
 
   def end_point
-    @maze.select { |v| v.type == "B".to_sym }.first
+    @maze.select { |v| v.tile == "B" }.first
   end
 
 private
@@ -67,7 +31,7 @@ private
         y += 1
         x = 0
       else 
-       result << Point.new(char.to_sym, x, y)
+       result << Point.new(char, x, y)
        x += 1 
       end
     end 

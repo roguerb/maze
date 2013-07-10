@@ -1,0 +1,39 @@
+Maze Problem
+=============
+
+http://rubylearning.com/blog/2009/12/27/rpcfn-mazes-5/
+
+Contributing
+------------
+
+
+Installation
+-----------
+
+
+Usage
+-----
+
+
+Testing
+-------
+
+    gem install rspec
+
+To run the tests:
+
+    $ rspec spec
+
+To add tests see the `Commands` section earlier in this
+README.
+
+
+Contributing
+------------
+
+1. Fork it.
+2. Create a branch (`git checkout -b my_markup`)
+3. Commit your changes (`git commit -am "Added Snarkdown"`)
+4. Push to the branch (`git push origin my_markup`)
+5. Open a [Pull Request][1]
+6. Enjoy a refreshing Diet Coke and wait
