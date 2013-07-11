@@ -1,11 +1,11 @@
 require_relative 'point'
 
 class Maze
-  attr_accessor :maze
+  attr_accessor :maze, :marker
 
   def initialize(maze_string)
     @maze = parse_maze(maze_string)
-    @marker = Marker.new(start_point)
+    @marker = Marker.new(start_point, self)
   end
 
   def find(x, y)
@@ -18,6 +18,10 @@ class Maze
 
   def end_point
     @maze.select { |v| v.tile == "B" }.first
+  end
+
+  def self.wall
+    "#"
   end
 
 private
