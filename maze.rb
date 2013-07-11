@@ -5,7 +5,7 @@ class Maze
 
   def initialize(maze_string)
     @maze = parse_maze(maze_string)
-    @player = Player.new(start_point)
+    @marker = Marker.new(start_point)
   end
 
   def find(x, y)
@@ -30,11 +30,11 @@ private
       if char == "\n"
         y += 1
         x = 0
-      else 
+      else
        result << Point.new(char, x, y)
-       x += 1 
+       x += 1
       end
-    end 
+    end
     result
   end
 end

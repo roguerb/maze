@@ -1,4 +1,4 @@
-class Player
+class Marker
   attr_accessor :x, :y
 
   def initialize(point)
