@@ -20,10 +20,10 @@ class Maze
     @maze.select { |v| v.tile == "B" }.first
   end
 
-private
+  private
+
   def parse_maze(maze)
-    x = 0
-    y = 0
+    x, y = 0, 0
     result = []
 
     maze.each_char do |char|
