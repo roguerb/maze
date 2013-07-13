@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Marker do
   it "can be initialized" do
-    point_double = OpenStruct.new({x: 10, y: 12})
-    marker = Marker.new(point_double)
+    tile_double = OpenStruct.new({x: 10, y: 12})
+    marker = Marker.new(tile_double)
 
     marker.should be_an_instance_of(Marker)
     expect(marker.x).to eq(10)

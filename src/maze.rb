@@ -1,7 +1,8 @@
-require_relative 'point'
+require_relative 'tile'
+require_relative 'marker'
 
 class Maze
-  attr_accessor :maze
+  attr_accessor :maze, :start_point
 
   def initialize(maze_string)
     @maze = parse_maze(maze_string)
@@ -13,11 +14,11 @@ class Maze
   end
 
   def start_point
-    @maze.select { |v| v.tile == "A" }.first
+    @maze.select { |v| v.type == :start }.first
   end
 
   def end_point
-    @maze.select { |v| v.tile == "B" }.first
+    @maze.select { |v| v.type == :end }.first
   end
 
   private
@@ -31,10 +32,24 @@ class Maze
         y += 1
         x = 0
       else
-       result << Point.new(char, x, y)
+       type = tile_type(char)
+       result << Tile.new(type, x, y)
        x += 1
       end
     end
     result
+  end
+
+  def tile_type(char)
+    case char
+    when '#'
+      :wall
+    when ' '
+      :floor
+    when 'A'
+      :start
+    when 'B'
+      :end
+    end
   end
 end
