@@ -9,6 +9,13 @@ class Maze
     @marker = Marker.new(start_point)
   end
 
+  TILE_TYPES = {
+    '#' => :wall,
+    ' ' => :floor,
+    'A' => :start,
+    'B' => :end
+  }
+
   def find(x, y)
     @tiles.select { |v| v.x == x && v.y == y }.first
   end
@@ -41,15 +48,6 @@ class Maze
   end
 
   def tile_type(char)
-    case char
-    when '#'
-      :wall
-    when ' '
-      :floor
-    when 'A'
-      :start
-    when 'B'
-      :end
-    end
+    TILE_TYPES[char]
   end
 end
