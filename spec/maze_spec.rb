@@ -4,10 +4,10 @@ describe Maze do
 
   subject(:maze) { build(:maze) }
 
-  it { respond_to :maze }
-  it { respond_to :start_point }
-  it { respond_to :end_point }
-  it { respond_to :find }
+  it { should respond_to :tiles }
+  it { should respond_to :start_point }
+  it { should respond_to :end_point }
+  it { should respond_to :find }
 
   describe "#start_point" do
     it { subject.start_point.should be_a_kind_of Tile }

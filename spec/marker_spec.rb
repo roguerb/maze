@@ -1,16 +1,17 @@
 require 'spec_helper'
 
 describe Marker do
-  it "can be initialized" do
-    tile_double = OpenStruct.new({x: 10, y: 12})
-    marker = Marker.new(tile_double)
 
+  let(:tile_double) { OpenStruct.new({x: 10, y: 12}) }
+  subject(:marker) { Marker.new(tile_double) }
+
+  it "can be initialized" do
     marker.should be_an_instance_of(Marker)
     expect(marker.x).to eq(10)
     expect(marker.y).to eq(12)
   end
 
-  it { respond_to :x }
-  it { respond_to :y }
-  it { respond_to :maze }
+  it { should respond_to :x }
+  it { should respond_to :y }
+
 end
