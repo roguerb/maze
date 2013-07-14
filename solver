@@ -1,0 +1,31 @@
+#!/usr/bin/env ruby
+
+src = File.expand_path(File.dirname(__FILE__)) + '/src/'
+$:.push(src); Dir.entries(src).each { |r| require r if r =~ /\.rb$/ };
+
+puts 'Enter a maze string to solve:'
+string = ''
+
+until ((line = gets) == "\n")
+  string += line
+end
+
+maze = Maze.new(string)
+puts maze.tiles
+
+
+## Example Maze:
+
+#####################################
+# #   #     #A        #     #       #
+# # # # # # ####### # ### # ####### #
+# # #   # #         #     # #       #
+# ##### # ################# # #######
+#     # #       #   #     # #   #   #
+##### ##### ### ### # ### # # # # # #
+#   #     #   # #   #  B# # # #   # #
+# # ##### ##### # # ### # # ####### #
+# #     # #   # # #   # # # #       #
+# ### ### # # # # ##### # # # ##### #
+#   #       #   #       #     #     #
+#####################################
