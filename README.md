@@ -3,29 +3,22 @@ Maze Problem
 
 http://rubylearning.com/blog/2009/12/27/rpcfn-mazes-5/
 
-Contributing
-------------
-
-
-Installation
------------
+[![Code Climate](https://codeclimate.com/github/roguerb/maze.png)](https://codeclimate.com/github/roguerb/maze)
 
 
 Usage
 -----
 
+    ruby solver
 
 Testing
 -------
 
-    gem install rspec
+    bundle install
 
 To run the tests:
 
     $ rspec spec
-
-To add tests see the `Commands` section earlier in this
-README.
 
 
 Contributing
