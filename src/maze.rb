@@ -2,23 +2,23 @@ require_relative 'tile'
 require_relative 'marker'
 
 class Maze
-  attr_accessor :maze, :start_point
+  attr_accessor :tiles, :start_point
 
   def initialize(maze_string)
-    @maze = parse_maze(maze_string)
+    @tiles = parse_maze(maze_string)
     @marker = Marker.new(start_point)
   end
 
   def find(x, y)
-    @maze.select { |v| v.x == x && v.y == y }.first
+    @tiles.select { |v| v.x == x && v.y == y }.first
   end
 
   def start_point
-    @maze.select { |v| v.type == :start }.first
+    @tiles.select { |v| v.type == :start }.first
   end
 
   def end_point
-    @maze.select { |v| v.type == :end }.first
+    @tiles.select { |v| v.type == :end }.first
   end
 
   private
