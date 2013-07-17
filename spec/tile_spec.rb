@@ -1,15 +1,19 @@
 require 'spec_helper'
 
 describe Tile do
-  it "can be initialized" do
-    tile = Tile.new('#', 1, 3)
+  context "with valid arguments" do
+    let(:tile) { Tile.new('#', 1, 3) }
 
-    tile.should be_an_instance_of(Tile)
-    expect(tile.x).to eq(1)
-    expect(tile.y).to eq(3)
+    it "can be initialized" do
+      expect(tile.type).to eq("#")
+      expect(tile.x).to eq(1)
+      expect(tile.y).to eq(3)
+    end
   end
 
-  it { respond_to :x }
-  it { respond_to :y }
-  it { respond_to :type }
+  context "with insufficient arguments" do
+    it "won't initialize" do
+      expect { Tile.new }.to raise_error
+    end
+  end
 end

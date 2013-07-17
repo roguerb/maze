@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Maze do
-
   subject(:maze) { build(:maze) }
 
   it { should respond_to :tiles }
@@ -35,5 +34,4 @@ describe Maze do
       it { subject.find(23,7).type.should == :end }
     end
   end
-
 end

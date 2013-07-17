@@ -2,11 +2,11 @@ require_relative 'tile'
 require_relative 'marker'
 
 class Maze
-  attr_accessor :tiles, :start_point
+  attr_accessor :tiles
 
   def initialize(maze_string)
     @tiles = parse_maze(maze_string)
-    @marker = Marker.new(start_point)
+    @marker = Marker.new(start_point.x, start_point.y)
   end
 
   TILE_TYPES = {
