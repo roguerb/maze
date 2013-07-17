@@ -16,16 +16,50 @@ class Maze
     'B' => :end
   }
 
-  def find(x, y)
-    @tiles.select { |v| v.x == x && v.y == y }.first
+  def tile_type_at(x, y)
+    @tiles.detect { |v| v.x == x && v.y == y }.type
+  end
+
+  def tile_at(x, y)
+    @tiles.detect { |v| v.x == x && v.y == y }
   end
 
   def start_point
-    @tiles.select { |v| v.type == :start }.first
+    @tiles.detect(&:start?)
   end
 
   def end_point
-    @tiles.select { |v| v.type == :end }.first
+    @tiles.detect(&:end?)
+  end
+
+  def shortest_path?
+    shortest_path
+  end
+
+  def shortest_path
+    paths = [[start_point]]
+    while !paths.empty? do
+      current_path = paths.shift
+      current_cell = current_path.last
+      return current_path if current_cell.end?
+      valid_neighbors =
+        neighbors_of(current_cell).reject(&:wall?).reject do |neighbor|
+          current_path.include?(neighbor)
+        end
+      valid_neighbors.each do |neighbor|
+        paths << current_path + [neighbor]
+      end
+    end
+    false
+  end
+
+  def neighbors_of(tile)
+    [
+      tile_at(tile.x - 1, tile.y),
+      tile_at(tile.x + 1, tile.y),
+      tile_at(tile.x, tile.y - 1),
+      tile_at(tile.x, tile.y + 1)
+    ].compact
   end
 
   private

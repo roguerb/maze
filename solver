@@ -13,6 +13,13 @@ end
 maze = Maze.new(string)
 puts maze.tiles
 
+if (maze.shortest_path?)
+  puts "The best solution is:"
+  p maze.shortest_path.map { |tile| [tile.x, tile.y] }
+else
+  puts "There is no solution"
+end
+
 
 ## Example Maze:
 
