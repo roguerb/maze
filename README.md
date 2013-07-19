@@ -18,7 +18,7 @@ Testing
 
 To run the tests:
 
-    $ rspec spec
+    $ bundle exec rake
 
 
 Contributing
