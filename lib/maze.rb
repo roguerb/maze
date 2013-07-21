@@ -1,14 +1,17 @@
+require_relative "maze/solver"
+
 class Maze
-  def initialize(maze_string)
+  def initialize(maze_string, solver = Solver.new)
+    @solver = solver
     parse(maze_string)
   end
 
   def solvable?
-    false
+    not solution.empty?
   end
 
   def steps
-    0
+    solution.length
   end
 
   def at(x, y)
@@ -22,5 +25,13 @@ class Maze
 
   def parse(maze_string)
     @cells = maze_string.lines.map(&:chomp).to_a
+  end
+
+  def solution
+    @solution ||= solve
+  end
+
+  def solve
+    @solver.solve(self)
   end
 end
