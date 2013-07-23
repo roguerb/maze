@@ -11,25 +11,29 @@ describe Maze do
     }
 
     it "has walls" do
-      expect(maze.at(0, 0)).to eq("#")
+      expect(maze.cell_at(0, 0)).to eq("#")
     end
 
     it "has halls" do
-      expect(maze.at(2, 1)).to eq(" ")
+      expect(maze.cell_at(2, 1)).to eq(" ")
     end
 
-    it "has a start point" do
-      expect(maze.at(1, 1)).to eq("A")
+    it "knows its starting cell" do
+      expect(maze.starting_cell).to eq([1, 1])
     end
 
     it "has an end point" do
-      expect(maze.at(3, 1)).to eq("B")
+      expect(maze.cell_at(3, 1)).to eq("B")
     end
 
     it "returns nil for off-grid cell indices" do
-      expect(maze.at(-1, -1)).to be_nil
-      expect(maze.at(2, 3)).to be_nil
-      expect(maze.at(5, 1)).to be_nil
+      expect(maze.cell_at(-1, -1)).to be_nil
+      expect(maze.cell_at(2, 3)).to be_nil
+      expect(maze.cell_at(5, 1)).to be_nil
+    end
+
+    it "finds neighbors of a cell" do
+      expect { |block| maze.neighbors_of(2, 1, &block) }.to yield_successive_args([1, 1], [3, 1], [2, 0], [2, 2])
     end
   end
 

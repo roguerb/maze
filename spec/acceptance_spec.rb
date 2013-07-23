@@ -68,7 +68,6 @@ describe "Acceptance Test" do
   end
 
   it "returns 0 steps for an unsolveable maze" do
-    pending "Acceptance tests aren't passing yet"
     expect(maze3.steps).to eq(0)
   end
 end

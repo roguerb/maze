@@ -14,9 +14,21 @@ class Maze
     solution.length
   end
 
-  def at(x, y)
-    return nil unless (0...@cells.size).include?(y)
-    row = @cells[y]
+  def starting_cell
+    @rows.each_with_index do |row, y|
+      x = row.index("A")
+      return [x, y] if x
+    end
+    nil
+  end
+
+  def neighbors_of(x, y, &block)
+    [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]].each(&block)
+  end
+
+  def cell_at(x, y)
+    return nil unless (0...@rows.size).include?(y)
+    row = @rows[y]
     return nil unless (0...row.size).include?(x)
     row[x]
   end
@@ -24,7 +36,7 @@ class Maze
   private
 
   def parse(maze_string)
-    @cells = maze_string.lines.map(&:chomp).to_a
+    @rows = maze_string.lines.map(&:chomp).to_a
   end
 
   def solution
