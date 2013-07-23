@@ -41,7 +41,7 @@ describe Maze do
     before(:each) do
       @solver = double("Solver")
       @maze = Maze.new("", @solver)
-      @solution = (1..42).to_a
+      @solution = (1..43).to_a
       expect(@solver).to receive(:solve).once.with(@maze) { @solution }
     end
 

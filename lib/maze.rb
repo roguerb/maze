@@ -11,7 +11,7 @@ class Maze
   end
 
   def steps
-    solution.length
+    solvable? ? solution.length - 1 : 0
   end
 
   def starting_cell

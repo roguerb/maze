@@ -55,14 +55,12 @@ describe "Acceptance Test" do
   let(:maze3) { Maze.new(MAZE3) }
 
   it "determines if a maze is solvable" do
-    pending "Acceptance tests aren't passing yet"
     expect(maze1).to be_solvable
     expect(maze2).to be_solvable
     expect(maze3).not_to be_solvable
   end
 
   it "counts the steps required to solve the maze" do
-    pending "Acceptance tests aren't passing yet"
     expect(maze1.steps).to eq(44)
     expect(maze2.steps).to eq(75)
   end
