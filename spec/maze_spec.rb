@@ -27,7 +27,7 @@ describe Maze do
     end
 
     it "knows its starting cell" do
-      expect(maze.starting_cell).to eq([1, 1])
+      expect(maze.starting_cell.position).to eq([1, 1])
     end
 
     it "returns nil for off-grid cell indices" do
@@ -37,11 +37,15 @@ describe Maze do
     end
 
     it "finds neighbors of a cell" do
-      expect { |block| maze.neighbors_of(2, 1, &block) }.to yield_successive_args([1, 1], [3, 1], [2, 0], [2, 2])
+      cell = maze.cell_at(2, 1)
+      expected = [[1, 1], [3, 1], [2, 0], [2, 2]].collect { |pos| maze.cell_at(*pos) }
+      expect(maze.neighbors_of(cell).to_a).to eq(expected)
     end
 
     it "doesn't yield off-grid neighbors" do
-      expect { |block| maze.neighbors_of(0, 0, &block) }.to yield_successive_args([1, 0], [0, 1])
+      cell = maze.cell_at(0, 0)
+      expected = [[1, 0], [0, 1]].collect { |pos| maze.cell_at(*pos) }
+      expect(maze.neighbors_of(cell).to_a).to eq(expected)
     end
   end
 

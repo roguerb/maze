@@ -4,9 +4,9 @@ class Solver
     while !paths.empty? do
       path = paths.shift
       cell = path.last
-      return path if maze.cell_at(*cell).end?
-      maze.neighbors_of(*cell).each do |neighbor|
-        paths << path + [neighbor] unless path.include?(neighbor) || !maze.cell_at(*neighbor).traversable?
+      return path if cell.end?
+      maze.neighbors_of(cell).each do |neighbor|
+        paths << path + [neighbor] unless path.include?(neighbor) || !neighbor.traversable?
       end
     end
     []

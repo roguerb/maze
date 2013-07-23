@@ -1,6 +1,12 @@
 class Cell
-  def initialize(cell_type)
+  def initialize(cell_type, x, y)
     @type = cell_type
+    @x = x
+    @y = y
+  end
+
+  def position
+    [@x, @y]
   end
 
   def traversable?

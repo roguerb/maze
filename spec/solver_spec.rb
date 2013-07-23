@@ -17,7 +17,7 @@ describe Solver do
 #AB#
 ####
     MAZE
-    expect(solver.solve(maze)).to eq([[1, 1], [2, 1]])
+    expect(solver.solve(maze).collect(&:position)).to eq([[1, 1], [2, 1]])
   end
 
   it "solves a simple multi-step maze" do
@@ -26,7 +26,7 @@ describe Solver do
 #A B#
 #####
     MAZE
-    expect(solver.solve(maze)).to eq([[1, 1], [2, 1], [3, 1]])
+    expect(solver.solve(maze).collect(&:position)).to eq([[1, 1], [2, 1], [3, 1]])
   end
 
   it "finds the shortest path" do
@@ -37,6 +37,6 @@ describe Solver do
 # AB #
 ######
 _MAZE
-    expect(solver.solve(maze)).to eq([[2, 3], [3, 3]])
+    expect(solver.solve(maze).collect(&:position)).to eq([[2, 3], [3, 3]])
   end
 end
