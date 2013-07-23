@@ -2,20 +2,13 @@ require_relative "spec_helper"
 require "maze"
 
 describe Maze do
-  SOLVABLE = <<-END_OF_MAZE
+  context "Simple maze" do
+    let(:maze) { Maze.new(<<-MAZE)
 #####
 #A B#
 #####
-  END_OF_MAZE
-
-  UNSOLVABLE = <<-END_OF_MAZE
-#####
-#A#B#
-#####
-  END_OF_MAZE
-
-  context "Simple maze" do
-    let(:maze) { Maze.new(SOLVABLE) }
+    MAZE
+    }
 
     it "has walls" do
       expect(maze.at(0, 0)).to eq("#")
@@ -43,7 +36,7 @@ describe Maze do
   context "Solvable maze" do
     before(:each) do
       @solver = double("Solver")
-      @maze = Maze.new(SOLVABLE, @solver)
+      @maze = Maze.new("", @solver)
       @solution = (1..42).to_a
       expect(@solver).to receive(:solve).once.with(@maze) { @solution }
     end
@@ -65,7 +58,7 @@ describe Maze do
   context "Unsolvable maze" do
     before(:each) do
       @solver = double("Solver")
-      @maze = Maze.new(UNSOLVABLE, @solver)
+      @maze = Maze.new("", @solver)
       @solution = []
       expect(@solver).to receive(:solve).once.with(@maze) { @solution }
     end
