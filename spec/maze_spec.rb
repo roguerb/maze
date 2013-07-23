@@ -35,6 +35,10 @@ describe Maze do
     it "finds neighbors of a cell" do
       expect { |block| maze.neighbors_of(2, 1, &block) }.to yield_successive_args([1, 1], [3, 1], [2, 0], [2, 2])
     end
+
+    it "doesn't yield off-grid neighbors" do
+      expect { |block| maze.neighbors_of(0, 0, &block) }.to yield_successive_args([1, 0], [0, 1])
+    end
   end
 
   context "Solvable maze" do
