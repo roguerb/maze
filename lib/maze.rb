@@ -19,10 +19,6 @@ class Maze
     @cells.detect(&:start?)
   end
 
-  def neighbors_of(cell, &block)
-    cell.neighbor_positions.collect { |pos| cell_at(*pos) }.compact.each(&block)
-  end
-
   def cell_at(x, y)
     @cells.detect { |cell| cell.position == [x, y] }
   end
@@ -32,7 +28,7 @@ class Maze
   def parse(maze_string)
     maze_string.lines.each_with_index do |line, y|
       line.chomp.each_char.each_with_index do |char, x|
-        @cells << Cell.new(char, x, y)
+        @cells << Cell.new(char, x, y, self)
       end
     end
   end

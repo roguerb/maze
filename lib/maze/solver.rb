@@ -5,7 +5,7 @@ class Solver
       path = paths.shift
       cell = path.last
       return path if cell.end?
-      maze.neighbors_of(cell).each do |neighbor|
+      cell.neighbors.each do |neighbor|
         paths << path + [neighbor] unless path.include?(neighbor) || !neighbor.traversable?
       end
     end

@@ -35,18 +35,6 @@ describe Maze do
       expect(maze.cell_at(2, 3)).to be_nil
       expect(maze.cell_at(5, 1)).to be_nil
     end
-
-    it "finds neighbors of a cell" do
-      cell = maze.cell_at(2, 1)
-      expected = [[1, 1], [3, 1], [2, 0], [2, 2]].collect { |pos| maze.cell_at(*pos) }
-      expect(maze.neighbors_of(cell).to_a).to eq(expected)
-    end
-
-    it "doesn't yield off-grid neighbors" do
-      cell = maze.cell_at(0, 0)
-      expected = [[1, 0], [0, 1]].collect { |pos| maze.cell_at(*pos) }
-      expect(maze.neighbors_of(cell).to_a).to eq(expected)
-    end
   end
 
   context "Solvable maze" do
