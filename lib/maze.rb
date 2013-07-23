@@ -16,8 +16,9 @@ class Maze
 
   def starting_cell
     @rows.each_with_index do |row, y|
-      x = row.index("A")
-      return [x, y] if x
+      row.each_with_index do |cell, x|
+        return [x, y] if cell.start?
+      end
     end
     nil
   end
@@ -36,7 +37,7 @@ class Maze
   private
 
   def parse(maze_string)
-    @rows = maze_string.lines.map(&:chomp).to_a
+    @rows = maze_string.lines.collect { |line| line.chomp.each_char.collect { |cell| Cell.new(cell) } }
   end
 
   def solution

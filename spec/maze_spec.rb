@@ -11,19 +11,23 @@ describe Maze do
     }
 
     it "has walls" do
-      expect(maze.cell_at(0, 0)).to eq("#")
+      expect(maze.cell_at(0, 0)).to be_wall
     end
 
     it "has halls" do
-      expect(maze.cell_at(2, 1)).to eq(" ")
+      expect(maze.cell_at(2, 1)).to be_hall
+    end
+
+    it "has a start point" do
+      expect(maze.cell_at(1, 1)).to be_start
+    end
+
+    it "has an end point" do
+      expect(maze.cell_at(3, 1)).to be_end
     end
 
     it "knows its starting cell" do
       expect(maze.starting_cell).to eq([1, 1])
-    end
-
-    it "has an end point" do
-      expect(maze.cell_at(3, 1)).to eq("B")
     end
 
     it "returns nil for off-grid cell indices" do
