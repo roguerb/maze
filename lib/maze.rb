@@ -20,8 +20,7 @@ class Maze
   end
 
   def neighbors_of(cell, &block)
-    x, y = *cell.position
-    [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]].collect { |pos| cell_at(*pos) }.compact.each(&block)
+    cell.neighbor_positions.collect { |pos| cell_at(*pos) }.compact.each(&block)
   end
 
   def cell_at(x, y)

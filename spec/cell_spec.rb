@@ -9,6 +9,10 @@ describe Cell do
     it "knows its position" do
       expect(cell.position).to eq([3, 4])
     end
+
+    it "knows its neighbor's positions" do
+      expect(cell.neighbor_positions.to_a).to eq([[2, 4], [4, 4], [3, 3], [3, 5]])
+    end
   end
 
   context "A wall" do

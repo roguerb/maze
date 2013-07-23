@@ -9,6 +9,10 @@ class Cell
     [@x, @y]
   end
 
+  def neighbor_positions(&block)
+    [[@x - 1, @y], [@x + 1, @y], [@x, @y - 1], [@x, @y + 1]].each(&block)
+  end
+
   def traversable?
     !wall?
   end
