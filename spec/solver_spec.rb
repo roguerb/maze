@@ -28,4 +28,15 @@ describe Solver do
     MAZE
     expect(solver.solve(maze)).to eq([[1, 1], [2, 1], [3, 1]])
   end
+
+  it "finds the shortest path" do
+    maze = Maze.new(<<_MAZE)
+######
+#    #
+# ## #
+# AB #
+######
+_MAZE
+    expect(solver.solve(maze)).to eq([[2, 3], [3, 3]])
+  end
 end
