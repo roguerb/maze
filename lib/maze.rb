@@ -24,7 +24,7 @@ class Maze
   end
 
   def neighbors_of(x, y, &block)
-    [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]].reject { |x, y| cell_at(x, y).nil? }.each(&block)
+    [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]].reject { |each_x, each_y| cell_at(each_x, each_y).nil? }.each(&block)
   end
 
   def cell_at(x, y)
