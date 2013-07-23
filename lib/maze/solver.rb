@@ -5,8 +5,8 @@ class Solver
       path = paths.shift
       cell = path.last
       return path if cell.end?
-      cell.neighbors.each do |neighbor|
-        paths << path + [neighbor] unless path.include?(neighbor) || !neighbor.traversable?
+      cell.traversable_neighbors.each do |neighbor|
+        paths << path + [neighbor] unless path.include?(neighbor)
       end
     end
     []

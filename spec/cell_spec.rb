@@ -26,6 +26,15 @@ describe Cell do
 
       expect(cell.neighbors.to_a).to eq([neighbor])
     end
+
+    it "knows its traversable neighbors" do
+      traversable = double("Cell", :traversable? => true)
+      non_traversable = double("Cell", :traversable? => false)
+      allow(maze).to receive(:cell_at).and_return(non_traversable, nil, traversable, nil)
+
+      expect(cell.traversable_neighbors.to_a).to eq([traversable])
+    end
+
   end
 
   context "A wall" do

@@ -14,6 +14,10 @@ class Cell
     [[@x - 1, @y], [@x + 1, @y], [@x, @y - 1], [@x, @y + 1]].collect { |pos| @maze.cell_at(*pos) }.compact.each(&block)
   end
 
+  def traversable_neighbors(&block)
+    neighbors.select(&:traversable?).each(&block)
+  end
+
   def traversable?
     !wall?
   end
