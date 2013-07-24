@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+lib = File.expand_path(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib) if File.directory?(lib) && !$LOAD_PATH.include?(lib)
+
+require 'maze'
+
+maze = Maze.new(ARGF.read)
+
+if maze.solvable?
+  puts "Maze is solvable in #{maze.steps} steps"
+else
+  puts "Maze is not solvable"
+end

@@ -9,7 +9,8 @@ http://rubylearning.com/blog/2009/12/27/rpcfn-mazes-5/
 Usage
 -----
 
-    ruby solver
+    bin/solver <filename>
+    or pipe the maze on stdin
 
 Testing
 -------
