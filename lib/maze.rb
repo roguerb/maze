@@ -17,6 +17,10 @@ class Maze
     solution.steps
   end
 
+  def solution
+    @solution ||= solve
+  end
+
   def starting_cell
     @cells.detect(&:start?)
   end
@@ -33,10 +37,6 @@ class Maze
         @cells << Cell.new(char, x, y, self)
       end
     end
-  end
-
-  def solution
-    @solution ||= solve
   end
 
   def solve

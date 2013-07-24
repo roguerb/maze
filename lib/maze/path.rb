@@ -31,6 +31,10 @@ class Path
     @cells.collect(&:position)
   end
 
+  def to_s
+    @cells.join(', ')
+  end
+
   private
 
   def with(cell)

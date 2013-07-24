@@ -8,7 +8,8 @@ require 'maze'
 maze = Maze.new(ARGF.read)
 
 if maze.solvable?
-  puts "Maze is solvable in #{maze.steps} steps"
+  puts "Maze is solvable in #{maze.steps} steps:"
+  puts maze.solution
 else
   puts "Maze is not solvable"
 end

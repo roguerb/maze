@@ -37,4 +37,8 @@ class Cell
   def end?
     @type == "B"
   end
+
+  def to_s
+    position.to_s
+  end
 end
