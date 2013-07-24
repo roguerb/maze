@@ -43,19 +43,28 @@ describe Path do
     end
   end
 
-  context "An extended path" do
+  context "A partial path" do
     before(:each) do
-      @path = Path.new
-      @cell = double("Cell")
-      @extended_path = @path.with(@cell)
+      @early_cell = double("Cell")
+      @neighbors = Array.new(2) { double("Cell") }
+      @neighbors << @early_cell
+      @cell = double("Cell", :traversable_neighbors => @neighbors)
+      @path = Path.new(@early_cell, @cell)
+      @successors = @path.successors
     end
 
-    it "includes the extension" do
-      expect(@extended_path).to include(@cell)
+    it "generates new paths as successors" do
+      @successors.each { |new_path| expect(new_path).not_to be(@path) }
     end
 
-    it "is a different object from its original" do
-      expect(@extended_path).not_to be(@path)
+    it "appends each neighbor to a successor" do
+      @successors.zip(@neighbors) do |new_path, neighbor|
+        expect(new_path.current_cell).to be(neighbor)
+      end
+    end
+
+    it "skips neighbors that are already on the path" do
+      expect(@successors.to_a.last.current_cell).not_to be(@early_cell)
     end
   end
 end

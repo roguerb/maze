@@ -7,8 +7,12 @@ class Path
     @cells.last
   end
 
-  def with(cell)
-    self.class.new(*(@cells + [cell]))
+  def successors(&block)
+    current_cell.traversable_neighbors.reject {
+        |neighbor| include?(neighbor)
+    }.collect {
+        |neighbor| with(neighbor)
+    }.each(&block)
   end
 
   def include?(cell)
@@ -25,5 +29,11 @@ class Path
 
   def positions
     @cells.collect(&:position)
+  end
+
+  private
+
+  def with(cell)
+    self.class.new(*(@cells + [cell]))
   end
 end

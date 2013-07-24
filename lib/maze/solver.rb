@@ -12,14 +12,15 @@ class Solver
       path = next_path
       return path if path.complete?
 
-      path.current_cell.traversable_neighbors.each do |neighbor|
-        enqueue(path.with(neighbor)) unless path.include?(neighbor)
+      path.successors.each do |new_path|
+        enqueue(new_path)
       end
     end
     Path.new
   end
 
   private
+
   def done?
     @paths.empty?
   end
