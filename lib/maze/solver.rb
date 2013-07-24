@@ -12,10 +12,9 @@ class Solver
       path = next_path
       return path if path.complete?
 
-      path.successors.each do |new_path|
-        enqueue(new_path)
-      end
+      path.successors.each { |new_path| enqueue(new_path) }
     end
+
     Path.new
   end
 
