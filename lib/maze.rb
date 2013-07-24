@@ -1,4 +1,5 @@
 require_relative "maze/solver"
+require_relative "maze/path"
 
 class Maze
   def initialize(maze_string, solver = Solver.new)
@@ -8,11 +9,11 @@ class Maze
   end
 
   def solvable?
-    not solution.empty?
+    solution.complete?
   end
 
   def steps
-    solvable? ? solution.length - 1 : 0
+    solution.steps
   end
 
   def starting_cell

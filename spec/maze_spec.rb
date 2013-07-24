@@ -41,7 +41,7 @@ describe Maze do
     before(:each) do
       @solver = double("Solver")
       @maze = Maze.new("", @solver)
-      @solution = (1..43).to_a
+      @solution = double("Path", :complete? => true, :steps => 42)
       expect(@solver).to receive(:solve).once.with(@maze) { @solution }
     end
 
@@ -63,7 +63,7 @@ describe Maze do
     before(:each) do
       @solver = double("Solver")
       @maze = Maze.new("", @solver)
-      @solution = []
+      @solution = Path.new
       expect(@solver).to receive(:solve).once.with(@maze) { @solution }
     end
 
