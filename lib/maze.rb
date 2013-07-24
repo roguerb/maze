@@ -1,5 +1,6 @@
 require_relative "maze/solver"
 require_relative "maze/path"
+require_relative "maze/cell"
 
 class Maze
   def initialize(maze_string, solver = Solver.new)
