@@ -18,13 +18,9 @@ describe Path do
     end
   end
 
-  context "An incomplete path" do
-    let(:cells) { Array.new(3) { double("Cell", :end? => false) } }
+  context "In a path" do
+    let(:cells) { Array.new(3) { double("Cell") } }
     let(:path) { Path.new(*cells) }
-
-    it "is not complete" do
-      expect(path).not_to be_complete
-    end
 
     it "has one less step than its cell count" do
       expect(path.steps).to eq(2)
@@ -32,6 +28,15 @@ describe Path do
 
     it "treats its last cell as its current_cell" do
       expect(path.current_cell).to be(cells.last)
+    end
+  end
+
+  context "An incomplete path" do
+    let(:cells) { Array.new(3) { double("Cell", :end? => false) } }
+    let(:path) { Path.new(*cells) }
+
+    it "is not complete" do
+      expect(path).not_to be_complete
     end
   end
 
