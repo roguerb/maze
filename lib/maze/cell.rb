@@ -19,7 +19,7 @@ class Cell
   end
 
   def neighbors(&block)
-    [[@x - 1, @y], [@x + 1, @y], [@x, @y - 1], [@x, @y + 1]].collect { |pos| @maze.cell_at(*pos) }.compact.each(&block)
+    all_neighbors.compact.each(&block)
   end
 
   def traversable_neighbors(&block)
@@ -58,5 +58,27 @@ class Cell
 
   def to_s
     @type
+  end
+
+  private
+
+  def all_neighbors
+    [west_neighbor, east_neighbor, north_neighbor, south_neighbor]
+  end
+
+  def north_neighbor
+    @maze.cell_at(@x, @y -1)
+  end
+
+  def south_neighbor
+    @maze.cell_at(@x, @y + 1)
+  end
+
+  def west_neighbor
+    @maze.cell_at(@x - 1, @y)
+  end
+
+  def east_neighbor
+    @maze.cell_at(@x + 1, @y)
   end
 end
