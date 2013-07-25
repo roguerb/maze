@@ -31,7 +31,9 @@ describe Path do
     end
 
     it "can be drawn" do
-      cells.each { |cell| expect(cell).to receive(:visit) }
+      expect(cells[0]).to receive(:visit).with(cells[1])
+      expect(cells[1]).to receive(:visit).with(cells[2])
+
       path.draw
     end
   end

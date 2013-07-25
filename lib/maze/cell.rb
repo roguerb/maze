@@ -3,9 +3,12 @@ class Cell
   HALL = " "
   START = "A"
   FINISH = "B"
-  VISITED = "."
+  NORTH = "^"
+  SOUTH = "v"
+  EAST = ">"
+  WEST = "<"
 
-  attr_reader :x, :y
+  attr_reader :type, :x, :y
 
   def initialize(cell_type, x, y, maze)
     @type = cell_type
@@ -47,13 +50,25 @@ class Cell
   end
 
   def visited?
-    @type == VISITED
+    [NORTH, SOUTH, EAST, WEST].include?(@type)
   end
 
-  def visit
+  def visit(cell)
     raise "Cannot visit a wall" if wall?
+    return unless hall?
 
-    @type = VISITED if hall?
+    @type = case cell
+              when north_neighbor
+                NORTH
+              when south_neighbor
+                SOUTH
+              when east_neighbor
+                EAST
+              when west_neighbor
+                WEST
+              else
+                raise "Can't visit a cell that isn't a neighbor"
+            end
   end
 
   def to_s

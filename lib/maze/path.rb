@@ -32,7 +32,7 @@ class Path
   end
 
   def draw
-    @cells.each(&:visit)
+    @cells.each_cons(2) { |first, second| first.visit(second) }
   end
 
   private

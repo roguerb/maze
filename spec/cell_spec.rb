@@ -3,20 +3,27 @@ require "maze/cell"
 
 describe Cell do
   let (:maze) { double("Maze") }
+  let (:neighbors) { Array.new(4) { double("Cell") } }
+
+  def new_cell(type)
+    Cell.new(type, 3, 4, maze)
+  end
+
+  def stub_neighbors
+    [[2, 4], [4, 4], [3, 3], [3, 5]].each_with_index do |pos, index|
+      allow(maze).to receive(:cell_at).with(*pos) { neighbors[index] }
+    end
+  end
 
   context "Any cell" do
-    let (:cell) { Cell.new(" ", 3, 4, maze) }
+    let (:cell) { new_cell(Cell::HALL) }
 
     it "knows its position" do
       expect(cell.position).to eq([3, 4])
     end
 
     it "knows its neighbors" do
-      neighbors = Array.new(4) { double("Cell") }
-      [[2, 4], [4, 4], [3, 3], [3, 5]].each_with_index do |pos, index|
-        allow(maze).to receive(:cell_at).with(*pos) { neighbors[index] }
-      end
-
+      stub_neighbors
       expect(cell.neighbors.to_a).to eq(neighbors)
     end
 
@@ -38,7 +45,7 @@ describe Cell do
   end
 
   context "A wall" do
-    let (:cell) { Cell.new("#", 1, 2, maze) }
+    let (:cell) { new_cell(Cell::WALL) }
 
     it "is a wall" do
       expect(cell).to be_wall
@@ -48,13 +55,13 @@ describe Cell do
       expect(cell).not_to be_traversable
     end
 
-    it "cannot be visited" do
-      expect { cell.visit }.to raise_error
+    it "cannot visit a neighbor" do
+      expect { cell.visit(double("Cell")) }.to raise_error
     end
   end
 
   context "A hall" do
-    let (:cell) { Cell.new(" ", 2, 1, maze) }
+    let (:cell) { new_cell(Cell::HALL) }
 
     it "is a hall" do
       expect(cell).to be_hall
@@ -64,19 +71,28 @@ describe Cell do
       expect(cell).to be_traversable
     end
 
-    it "can be visited" do
-      cell.visit
-      expect(cell).to be_visited
-    end
+    context "with neighbors" do
+      before(:each) { stub_neighbors }
 
-    it "is still a hall after visiting" do
-      cell.visit
-      expect(cell).to be_hall
+      it "can visit a neighbor" do
+        cell.visit(neighbors.first)
+        expect(cell).to be_visited
+      end
+
+      it "is still a hall after visiting" do
+        cell.visit(neighbors.first)
+        expect(cell).to be_hall
+      end
+
+      it "remembers which neighbor it visits" do
+        cell.visit(neighbors.first)
+        expect(cell.type).to eq(Cell::WEST)
+      end
     end
   end
 
   context "The start point" do
-    let (:cell) { Cell.new("A", 3, 2, maze) }
+    let (:cell) { new_cell(Cell::START) }
 
     it "is the start point" do
       expect(cell).to be_start
@@ -87,13 +103,13 @@ describe Cell do
     end
 
     it "is not affected by visiting" do
-      cell.visit
+      cell.visit(double("Cell"))
       expect(cell).not_to be_visited
     end
   end
 
   context "The end point" do
-    let (:cell) { Cell.new("B", 3, 4, maze) }
+    let (:cell) { new_cell(Cell::FINISH) }
 
     it "is the end point" do
       expect(cell).to be_end
@@ -104,7 +120,7 @@ describe Cell do
     end
 
     it "is not affected by visiting" do
-      cell.visit
+      cell.visit(double("Cell"))
       expect(cell).not_to be_visited
     end
   end
