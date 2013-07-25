@@ -29,6 +29,16 @@ class Maze
     @cells.detect { |cell| cell.position == [x, y] }
   end
 
+  def to_s
+    result = ""
+    @cells.each_cons(2) do |first, second|
+      result << first.to_s
+      result << "\n" unless first.y == second.y
+    end
+    result << @cells.last.to_s << "\n"
+    result
+  end
+
   private
 
   def parse(maze_string)

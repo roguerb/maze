@@ -32,7 +32,7 @@ class Path
   end
 
   def to_s
-    @cells.join(', ')
+    (@cells.collect(&:position)).to_s
   end
 
   private

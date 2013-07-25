@@ -1,4 +1,6 @@
 class Cell
+  attr_reader :x, :y
+
   def initialize(cell_type, x, y, maze)
     @type = cell_type
     @x = x
@@ -39,6 +41,6 @@ class Cell
   end
 
   def to_s
-    position.to_s
+    @type
   end
 end

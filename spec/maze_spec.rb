@@ -2,13 +2,13 @@ require_relative "spec_helper"
 require "maze"
 
 describe Maze do
-  context "Simple maze" do
-    let(:maze) { Maze.new(<<-MAZE)
+  MAZE = <<-END_OF_MAZE
 #####
 #A B#
 #####
-    MAZE
-    }
+  END_OF_MAZE
+  context "Simple maze" do
+    let(:maze) { Maze.new(MAZE) }
 
     it "has walls" do
       expect(maze.cell_at(0, 0)).to be_wall
@@ -34,6 +34,10 @@ describe Maze do
       expect(maze.cell_at(-1, -1)).to be_nil
       expect(maze.cell_at(2, 3)).to be_nil
       expect(maze.cell_at(5, 1)).to be_nil
+    end
+
+    it "can recreate its string representation" do
+      expect(maze.to_s).to eq(MAZE)
     end
   end
 
