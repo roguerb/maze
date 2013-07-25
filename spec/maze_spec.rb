@@ -45,7 +45,7 @@ describe Maze do
     before(:each) do
       @solver = double("Solver")
       @maze = Maze.new("", @solver)
-      @solution = double("Path", :complete? => true, :steps => 42)
+      @solution = double("Path", :complete? => true, :steps => 42).as_null_object
       expect(@solver).to receive(:solve).once.with(@maze) { @solution }
     end
 
@@ -61,13 +61,18 @@ describe Maze do
       @maze.solvable?
       @maze.steps
     end
+
+    it "draws the solution" do
+      expect(@solution).to receive(:draw)
+      @maze.solution
+    end
   end
 
   context "Unsolvable maze" do
     before(:each) do
       @solver = double("Solver")
       @maze = Maze.new("", @solver)
-      @solution = Path.new
+      @solution = double("Path", :complete? => false, :steps => 0)
       expect(@solver).to receive(:solve).once.with(@maze) { @solution }
     end
 
@@ -77,6 +82,11 @@ describe Maze do
 
     it "has zero steps in its solution" do
       expect(@maze.steps).to eq(0)
+    end
+
+    it "doesn't draw the solution" do
+      expect(@solution).not_to receive(:draw)
+      @maze.solution
     end
   end
 end

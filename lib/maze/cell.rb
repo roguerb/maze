@@ -29,7 +29,7 @@ class Cell
   end
 
   def hall?
-    @type == " "
+    @type == " " || visited?
   end
 
   def start?
@@ -38,6 +38,16 @@ class Cell
 
   def end?
     @type == "B"
+  end
+
+  def visited?
+    @type == "."
+  end
+
+  def visit
+    raise "Cannot visit a wall" if wall?
+
+    @type = "." if hall?
   end
 
   def to_s

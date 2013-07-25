@@ -31,8 +31,8 @@ class Path
     @cells.collect(&:position)
   end
 
-  def to_s
-    (@cells.collect(&:position)).to_s
+  def draw
+    @cells.each(&:visit)
   end
 
   private

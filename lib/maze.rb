@@ -50,6 +50,8 @@ class Maze
   end
 
   def solve
-    @solver.solve(self)
+    solution = @solver.solve(self)
+    solution.draw if solution.complete?
+    solution
   end
 end

@@ -18,7 +18,7 @@ describe Path do
     end
   end
 
-  context "In a path" do
+  context "A path" do
     let(:cells) { Array.new(3) { double("Cell") } }
     let(:path) { Path.new(*cells) }
 
@@ -28,6 +28,11 @@ describe Path do
 
     it "treats its last cell as its current_cell" do
       expect(path.current_cell).to be(cells.last)
+    end
+
+    it "can be drawn" do
+      cells.each { |cell| expect(cell).to receive(:visit) }
+      path.draw
     end
   end
 

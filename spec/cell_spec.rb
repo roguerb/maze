@@ -47,6 +47,10 @@ describe Cell do
     it "is not traversable" do
       expect(cell).not_to be_traversable
     end
+
+    it "cannot be visited" do
+      expect { cell.visit }.to raise_error
+    end
   end
 
   context "A hall" do
@@ -58,6 +62,16 @@ describe Cell do
 
     it "is traversable" do
       expect(cell).to be_traversable
+    end
+
+    it "can be visited" do
+      cell.visit
+      expect(cell).to be_visited
+    end
+
+    it "is still a hall after visiting" do
+      cell.visit
+      expect(cell).to be_hall
     end
   end
 
@@ -71,6 +85,11 @@ describe Cell do
     it "is traversable" do
       expect(cell).to be_traversable
     end
+
+    it "is not affected by visiting" do
+      cell.visit
+      expect(cell).not_to be_visited
+    end
   end
 
   context "The end point" do
@@ -82,6 +101,11 @@ describe Cell do
 
     it "is traversable" do
       expect(cell).to be_traversable
+    end
+
+    it "is not affected by visiting" do
+      cell.visit
+      expect(cell).not_to be_visited
     end
   end
 end
