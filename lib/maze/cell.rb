@@ -1,4 +1,10 @@
 class Cell
+  WALL = "#"
+  HALL = " "
+  START = "A"
+  FINISH = "B"
+  VISITED = "."
+
   attr_reader :x, :y
 
   def initialize(cell_type, x, y, maze)
@@ -25,29 +31,29 @@ class Cell
   end
 
   def wall?
-    @type == "#"
+    @type == WALL
   end
 
   def hall?
-    @type == " " || visited?
+    @type == HALL || visited?
   end
 
   def start?
-    @type == "A"
+    @type == START
   end
 
   def end?
-    @type == "B"
+    @type == FINISH
   end
 
   def visited?
-    @type == "."
+    @type == VISITED
   end
 
   def visit
     raise "Cannot visit a wall" if wall?
 
-    @type = "." if hall?
+    @type = VISITED if hall?
   end
 
   def to_s
