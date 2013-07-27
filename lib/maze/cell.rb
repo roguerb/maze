@@ -82,7 +82,7 @@ class Cell
   end
 
   def north_neighbor
-    @maze.cell_at(@x, @y -1)
+    @maze.cell_at(@x, @y - 1)
   end
 
   def south_neighbor
