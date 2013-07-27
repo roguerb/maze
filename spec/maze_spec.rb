@@ -41,52 +41,62 @@ describe Maze do
     end
   end
 
-  context "Solvable maze" do
-    before(:each) do
-      @solver = double("Solver")
-      @maze = Maze.new("", @solver)
-      @solution = double("Path", :complete? => true, :steps => 42).as_null_object
-      expect(@solver).to receive(:solve).once.with(@maze) { @solution }
+  context "When solving" do
+    ANY_MAZE = ""
+
+    let(:solver) { double("Solver") }
+    let(:maze) { Maze.new(ANY_MAZE, solver) }
+    let(:solution) { Path.new }
+
+    it "delegates solving to its solver" do
+      expect(solver).to receive(:solve).with(maze) { solution }
+      expect(maze.solution).to be(solution)
     end
 
-    it "solves the maze" do
-      expect(@maze).to be_solvable
-    end
-
-    it "counts the steps in the solution" do
-      expect(@maze.steps).to eq(42)
+    it "knows how many steps are in the solution" do
+      expect(solver).to receive(:solve).with(maze) { solution }
+      allow(solution).to receive(:steps) { 42 }
+      expect(maze.steps).to eq(42)
     end
 
     it "only solves the maze once" do
-      @maze.solvable?
-      @maze.steps
+      expect(solver).to receive(:solve).once.with(maze) { solution }
+      maze.solution
+      maze.solvable?
+      maze.steps
     end
 
-    it "draws the solution" do
-      expect(@solution).to receive(:draw)
-      @maze.solution
-    end
-  end
+    context "a solvable maze" do
+      let(:good_solution) { double("Path", :complete? => true).as_null_object }
 
-  context "Unsolvable maze" do
-    before(:each) do
-      @solver = double("Solver")
-      @maze = Maze.new("", @solver)
-      @solution = double("Path", :complete? => false, :steps => 0)
-      expect(@solver).to receive(:solve).once.with(@maze) { @solution }
-    end
+      before(:each) do
+        expect(solver).to receive(:solve).with(maze) { good_solution }
+      end
 
-    it "tries to solve the maze" do
-      expect(@maze).not_to be_solvable
-    end
+      it "is solvable" do
+        expect(maze).to be_solvable
+      end
 
-    it "has zero steps in its solution" do
-      expect(@maze.steps).to eq(0)
+      it "draws the solution" do
+        expect(good_solution).to receive(:draw)
+        maze.solution
+      end
     end
 
-    it "doesn't draw the solution" do
-      expect(@solution).not_to receive(:draw)
-      @maze.solution
+    context "an unsolvable maze" do
+      let(:no_solution) { double("Path", :complete? => false) }
+      before(:each) do
+        expect(solver).to receive(:solve).with(maze) { no_solution }
+      end
+
+      it "is not solvable" do
+        expect(maze).not_to be_solvable
+      end
+
+      it "doesn't draw the solution" do
+        expect(no_solution).not_to receive(:draw)
+        maze.solution
+      end
     end
   end
 end
