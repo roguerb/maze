@@ -22,18 +22,11 @@ class Maze
   end
 
   def starting_cell
-    @rows.each do |row|
-      row.each do |cell|
-        return cell if cell.start?
-      end
-    end
+    @rows.each { |row| row.each { |cell| return cell if cell.start? } }
   end
 
   def cell_at(x, y)
-    return nil unless (0...@rows.size).include?(y)
-    row = @rows[y]
-    return nil unless (0...row.size).include?(x)
-    row[x]
+    cell_in_row(row_at(y), x)
   end
 
   def to_s
@@ -54,5 +47,15 @@ class Maze
     solution = @solver.solve(self)
     solution.draw if solution.complete?
     solution
+  end
+
+  def row_at(index)
+    return nil unless (0...@rows.size).include?(index)
+    @rows[index]
+  end
+
+  def cell_in_row(row, index)
+    return nil unless row && (0...row.size).include?(index)
+    row[index]
   end
 end
