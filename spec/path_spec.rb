@@ -57,26 +57,35 @@ describe Path do
 
   context "A partial path" do
     before(:each) do
-      @early_cell = double("Cell")
       @neighbors = Array.new(2) { double("Cell") }
-      @neighbors << @early_cell
       @cell = double("Cell", :traversable_neighbors => @neighbors)
-      @path = Path.new(@early_cell, @cell)
-      @successors = @path.successors
+      @path = Path.new(@cell)
     end
 
-    it "generates new paths as successors" do
-      @successors.each { |new_path| expect(new_path).not_to be(@path) }
+    it "generates one successor per neighbor" do
+      expect(@path.successors.size).to eq(@neighbors.size)
     end
 
     it "appends each neighbor to a successor" do
-      @successors.zip(@neighbors) do |new_path, neighbor|
-        expect(new_path.current_cell).to be(neighbor)
+      @path.successors.zip(@neighbors) do |successor, neighbor|
+        expect(successor.current_cell).to be(neighbor)
       end
     end
 
-    it "skips neighbors that are already on the path" do
-      expect(@successors.to_a.last.current_cell).not_to be(@early_cell)
+    it "doesn't change itself when generating successors" do
+      before = @path.steps
+      @path.successors
+      expect(@path.steps).to eq(before)
+    end
+  end
+
+  context "With an already-visited neighbor" do
+    it "doesn't generate successors" do
+      visited = double("Visited")
+      cell = double("Cell", :traversable_neighbors => [visited])
+      path = Path.new(visited, cell)
+
+      expect(path.successors.to_a).to be_empty
     end
   end
 end
