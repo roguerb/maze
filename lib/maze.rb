@@ -5,7 +5,7 @@ require_relative "maze/cell"
 class Maze
   def initialize(maze_string, solver = Solver.new)
     @solver = solver
-    @cells = []
+    @rows = []
     parse(maze_string)
   end
 
@@ -22,31 +22,32 @@ class Maze
   end
 
   def starting_cell
-    @cells.detect(&:start?)
+    @rows.each do |row|
+      row.each do |cell|
+        return cell if cell.start?
+      end
+    end
   end
 
   def cell_at(x, y)
-    @cells.detect { |cell| cell.position == [x, y] }
+    return nil unless (0...@rows.size).include?(y)
+    row = @rows[y]
+    return nil unless (0...row.size).include?(x)
+    row[x]
   end
 
   def to_s
-    result = ""
-    @cells.each_cons(2) do |first, second|
-      result << first.to_s
-      result << "\n" unless first.y == second.y
-    end
-    result << @cells.last.to_s << "\n"
-    result
+    @rows.collect { |row| row.collect(&:to_s).join << "\n" }.join
   end
 
   private
 
   def parse(maze_string)
-    maze_string.lines.each_with_index do |line, y|
-      line.chomp.each_char.each_with_index do |char, x|
-        @cells << Cell.new(char, x, y, self)
-      end
-    end
+    @rows = maze_string.lines.each_with_index.collect { |line, y|
+      line.chomp.chars.each_with_index.collect { |char, x|
+        Cell.new(char, x, y, self)
+      }
+    }
   end
 
   def solve
